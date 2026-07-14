@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>灵感簿 · Aston Martin POV</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card-hover: #1a1a1a;
+    --accent: #c8a45c;
+    --accent-dim: #8a7140;
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --border: #2a2a2a;
+    --green: #4a7c59;
+    --red: #8b3a3a;
+    --blue: #3a5a8b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ===== Header ===== */
+  header {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 24px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  header h1 .logo {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #0a0a0a;
+    font-weight: 900;
+  }
+
+  header .subtitle {
+    color: var(--accent);
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    font-weight: 300;
+  }
+
+  header .tagline {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* ===== Stats Bar ===== */
+  .stats-bar {
+    max-width: 960px;
+    margin: 20px auto 0;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .stat-item .num {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ===== Controls ===== */
+  .controls {
+    max-width: 960px;
+    margin: 20px auto 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px 10px 40px;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus { border-color: var(--accent-dim); }
+
+  .search-box::before {
+    content: "🔍";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    opacity: 0.5;
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 16px;
+    color: var(--text-dim);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--accent-dim);
+    color: var(--text);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0a0a;
+    font-weight: 600;
+  }
+
+  /* ===== Main Content ===== */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* ===== Timeline ===== */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-dim), var(--border));
+  }
+
+  .entry {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .entry:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-dim);
+    transform: translateX(2px);
+  }
+
+  .entry::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 24px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent-dim);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .entry-date {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .entry-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-driving { background: rgba(200,164,92,0.15); color: var(--accent); border: 1px solid rgba(200,164,92,0.3); }
+  .tag-business { background: rgba(74,124,89,0.15); color: #6fa67e; border: 1px solid rgba(74,124,89,0.3); }
+  .tag-human { background: rgba(139,58,58,0.15); color: #c76a6a; border: 1px solid rgba(139,58,58,0.3); }
+  .tag-lifestyle { background: rgba(58,90,139,0.15); color: #6a8fc7; border: 1px solid rgba(58,90,139,0.3); }
+  .tag-creative { background: rgba(150,100,180,0.15); color: #a87ec7; border: 1px solid rgba(150,100,180,0.3); }
+
+  .entry-content {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .entry-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .status {
+    font-size: 11px;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  .status-pending { background: rgba(200,164,92,0.12); color: var(--accent); }
+  .status-published { background: rgba(74,124,89,0.15); color: #6fa67e; }
+  .status-shelved { background: rgba(136,136,136,0.1); color: var(--text-dim); }
+
+  /* ===== Empty State ===== */
+  .empty-state {
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--text-dim);
+  }
+
+  .empty-state .icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  .empty-state p {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .empty-state .hint {
+    font-size: 13px;
+    color: var(--text-dim);
+    opacity: 0.6;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  footer .brand {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    header { padding: 24px 16px 20px; }
+    header h1 { font-size: 22px; }
+    .stats-bar { gap: 16px; }
+    main { padding: 16px; }
+    .entry { padding: 16px; }
+    .timeline { padding-left: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1><span class="logo">A</span>灵感簿</h1>
+    <div class="subtitle">Aston Martin POV · 精英驾驶漫谈</div>
+    <div class="tagline">商业 · 人性 · 生活方式</div>
+    <div class="stats-bar">
+      <div class="stat-item">共 <span class="num" id="totalCount">0</span> 条灵感</div>
+      <div class="stat-item">🏎️ 驾驶漫谈 <span class="num" id="count-driving">0</span></div>
+      <div class="stat-item">💼 商业洞察 <span class="num" id="count-business">0</span></div>
+      <div class="stat-item">🧠 人性思考 <span class="num" id="count-human">0</span></div>
+      <div class="stat-item">🍷 生活方式 <span class="num" id="count-lifestyle">0</span></div>
+      <div class="stat-item">🎬 内容创意 <span class="num" id="count-creative">0</span></div>
+    </div>
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜索灵感内容…" oninput="applyFilters()">
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="setFilter('all', this)">全部</button>
+        <button class="filter-btn" onclick="setFilter('driving', this)">🏎️ 驾驶漫谈</button>
+        <button class="filter-btn" onclick="setFilter('business', this)">💼 商业洞察</button>
+        <button class="filter-btn" onclick="setFilter('human', this)">🧠 人性思考</button>
+        <button class="filter-btn" onclick="setFilter('lifestyle', this)">🍷 生活方式</button>
+        <button class="filter-btn" onclick="setFilter('creative', this)">🎬 内容创意</button>
+      </div>
+    </div>
+    <div class="controls" style="margin-top:10px;">
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="setStatusFilter('all', this)">全部状态</button>
+        <button class="filter-btn" onclick="setStatusFilter('pending', this)">⏳ 待开发</button>
+        <button class="filter-btn" onclick="setStatusFilter('published', this)">✅ 已发布</button>
+        <button class="filter-btn" onclick="setStatusFilter('shelved', this)">📦 已搁置</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="timeline" id="timeline">
+    <!-- 灵感条目将在此渲染 -->
+  </div>
+  <div class="empty-state" id="emptyState">
+    <div class="icon">🏎️</div>
+    <p>灵感簿已就绪</p>
+    <p class="hint">把你的灵感发给我，我会帮你记录在这里</p>
+  </div>
+</main>
+
+<footer>
+  <div class="brand">ASTON MARTIN POV</div>
+  <div>灵感簿 · 精英驾驶漫谈 · 商业 · 人性 · 生活方式</div>
+</footer>
+
+<script>
+  // ===== 版本号（每次更新递增，强制微信刷新缓存）=====
+  const PAGE_VERSION = "20260714_1058";
+
+  // ===== 强制刷新缓存：URL带版本参数，微信不会缓存不同URL =====
+  (function() {
+    const url = new URL(window.location.href);
+    const v = url.searchParams.get('_v');
+    if (v !== PAGE_VERSION) {
+      url.searchParams.set('_v', PAGE_VERSION);
+      window.location.replace(url.toString());
+      return;
+    }
+  })();
+
+  // ===== 灵感数据 =====
+  const entries = [
+    {
+      date: "2026-07-14 01:43",
+      content: "「All-in」\n\n德州扑克里有一种打法叫 All-in——核心就八个字：看见机会，倾囊而出。\n\n平时可以蛰伏，可以观望，可以慢慢耗——但机会一旦显现，就要全力出击，不留退路。这不是赌，是判断力到了之后的果决。\n\n打牌如此，职业如此，人生亦如此。\n\n你的时间、精力、青春，就是手上的筹码。筹码有限，不可能每把都跟。大部分时候你在等待、在观察、在积蓄。但当那手牌出现——那张你等的牌——犹豫一秒都是对筹码的浪费。\n\n人生只有一次，没有重新发牌。所以该蛰伏时沉得住气，该出击时下得了手。\n\nAll-in 不是冲动，是蓄谋已久的果断。人生也要 All-in。",
+      tags: ["human", "lifestyle"],
+      status: "pending"
+    },
+    {
+      date: "2026-07-14 01:58",
+      content: "「止痛药」\n\n宇多田光被问到：为什么人在与某人分开时会感到痛苦？\n\n她回答：「原本就有痛苦，那个人存在本身就是止痛药。」\n\n——这才是真正的清醒。\n\n精英的成长路径里，几乎都会遇到一个人：你很爱 TA，TA 也很爱你。TA 曾替你止住了生活里那些隐秘的疼痛，让你以为世界本该如此温柔。\n\n但成长的方向、速度、轨道终会分岔。你不得不和这样的人说再见。\n\n不是因为不爱了，是因为往前走的路只够一个人通过。\n\n所以——\n\n感激那个替你止过痛的人，那段日子是真的不疼了。\n\n习惯生活的别离，成长就是不断挥手，不多解释。\n\n珍惜过往，它已经长进你的骨骼，谁也拿不走。\n\n期待未来的生活，下一段路，会有新的风景、新的相遇。\n\n止痛药停了，不代表痛苦回来了。代表你已经足够强壮，可以带着记忆继续往前走了。",
+      tags: ["human", "lifestyle"],
+      status: "pending"
+    },
+    {
+      date: "2026-07-14 10:58",
+      content: "「换道超车」\n\n大家都爱说\"弯道超车\"。\n\n但开过车的人都知道——弯道超车是最危险的动作。视线受阻、抓地力下降、方向盘还在调整，这时候变道等于拿命赌。\n\n真正懂驾驶的人，超车不在弯道做。直线、视野清晰、路面条件允许，一脚油门干净利落。\n\n商业也一样。\n\n弯道超车的本质是：在同一条赛道上，用更冒险的方式抢位置。对手看得到你在干什么，路就那么宽，稍微失误就是双输。\n\n真正有效的超车是换道——不在同一条赛道上硬挤，而是另辟蹊径，换一个维度。\n\n别人拼价格，你拼体验。别人拼规模，你拼精度。别人在红海里贴身肉搏，你已经在新赛道上独自加速。\n\n弯道超车是冒险，换道超车是判断。\n\n驾驶如此，商业如此。真正的高手不在弯道搏命，在直道换道，然后一脚油门，扬长而去。",
+      tags: ["driving", "business"],
+      status: "pending"
+    }
+  ];
+
+  // ===== 标签映射 =====
+  const tagMap = {
+    driving: { label: "🏎️ 驾驶漫谈", class: "tag-driving" },
+    business: { label: "💼 商业洞察", class: "tag-business" },
+    human: { label: "🧠 人性思考", class: "tag-human" },
+    lifestyle: { label: "🍷 生活方式", class: "tag-lifestyle" },
+    creative: { label: "🎬 内容创意", class: "tag-creative" }
+  };
+
+  const statusMap = {
+    pending: { label: "⏳ 待开发", class: "status-pending" },
+    published: { label: "✅ 已发布", class: "status-published" },
+    shelved: { label: "📦 已搁置", class: "status-shelved" }
+  };
+
+  // ===== 筛选状态 =====
+  let currentFilter = 'all';
+  let currentStatusFilter = 'all';
+  let searchTerm = '';
+
+  function setFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-group:first-child .filter-btn').forEach(b => b.classList.remove('active'));
+    // 重新查找：重置所有分类按钮
+    document.querySelectorAll('.controls .filter-group')[0].querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  function setStatusFilter(status, btn) {
+    currentStatusFilter = status;
+    document.querySelectorAll('.controls .filter-group')[1].querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  function applyFilters() {
+    searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    render();
+  }
+
+  // ===== 渲染 =====
+  function render() {
+    const timeline = document.getElementById('timeline');
+    const emptyState = document.getElementById('emptyState');
+
+    let filtered = entries.filter(e => {
+      // 分类筛选
+      if (currentFilter !== 'all' && !e.tags.includes(currentFilter)) return false;
+      // 状态筛选
+      if (currentStatusFilter !== 'all' && e.status !== currentStatusFilter) return false;
+      // 搜索
+      if (searchTerm && !e.content.toLowerCase().includes(searchTerm) && !e.date.includes(searchTerm)) return false;
+      return true;
+    });
+
+    // 更新统计
+    document.getElementById('totalCount').textContent = entries.length;
+    ['driving','business','human','lifestyle','creative'].forEach(t => {
+      document.getElementById('count-' + t).textContent = entries.filter(e => e.tags.includes(t)).length;
+    });
+
+    if (filtered.length === 0) {
+      timeline.innerHTML = '';
+      emptyState.style.display = 'block';
+      if (entries.length > 0) {
+        emptyState.querySelector('.icon').textContent = '🔍';
+        emptyState.querySelector('p').textContent = '没有匹配的灵感';
+        emptyState.querySelector('.hint').textContent = '试试调整筛选条件或搜索词';
+      } else {
+        emptyState.querySelector('.icon').textContent = '🏎️';
+        emptyState.querySelector('p').textContent = '灵感簿已就绪';
+        emptyState.querySelector('.hint').textContent = '把你的灵感发给我，我会帮你记录在这里';
+      }
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    timeline.innerHTML = filtered.map(e => {
+      const tagsHtml = e.tags.map(t => {
+        const tag = tagMap[t] || { label: t, class: 'tag-creative' };
+        return `<span class="tag ${tag.class}">${tag.label}</span>`;
+      }).join('');
+      const status = statusMap[e.status] || statusMap.pending;
+      return `
+        <div class="entry">
+          <div class="entry-header">
+            <span class="entry-date">${e.date}</span>
+            <div class="entry-tags">${tagsHtml}</div>
+          </div>
+          <div class="entry-content">${escapeHtml(e.content)}</div>
+          <div class="entry-footer">
+            <span class="status ${status.class}">${status.label}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // 初始渲染
+  render();
+</script>
+
+</body>
+</html>
