@@ -198,6 +198,22 @@
     color: var(--accent-light);
   }
 
+  /* 列表中的迷你标签 */
+  .entry-tags-inline {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .tag-mini {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 8px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+
   .entry-meta {
     display: flex;
     align-items: center;
@@ -365,7 +381,7 @@
 
 <script>
   // ===== 版本号 =====
-  const PAGE_VERSION = "20260714_1233";
+  const PAGE_VERSION = "20260714_1238";
 
   (function() {
     const url = new URL(window.location.href);
@@ -469,11 +485,15 @@
       ).join('');
       const timeStr = e.date.substring(5, 16).replace('-', '/').replace(' ', ' · ');
       
+      const tagsInlineHtml = e.tags.map(t => 
+        `<span class="tag-mini tag-${t}">${tagMap[t]} ${tagLabelMap[t] || t}</span>`
+      ).join('');
+      
       return `
         <div class="entry" id="entry-${id}" onclick="toggleEntry(${id})">
           <div class="entry-summary">
-            <div class="entry-icons">${icons}</div>
             <div class="entry-title">${escapeHtml(e.title)}</div>
+            <div class="entry-tags-inline">${tagsInlineHtml}</div>
             <div class="entry-meta">
               <span class="entry-time">${timeStr}</span>
               <span class="entry-status-dot status-${e.status}"></span>
